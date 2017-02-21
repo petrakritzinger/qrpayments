@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>QR Payment</title>
+        <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+        <meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'/>
+        <link rel='stylesheet' href='http://code.jquery.com/mobile/1.4.0-beta.1/jquery.mobile-1.4.0-beta.1.min.css'/>
+        <link rel='stylesheet' href='http://example.gajotres.net/iscrollview/jquery.mobile.iscrollview.css'/>
+        <link rel='stylesheet' href='http://example.gajotres.net/iscrollview/jquery.mobile.iscrollview-pull.css'/>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/jtsage-datebox.min.css"/>
+        <!-- <link rel="stylesheet" type="text/css" href="themes/QRPayments.min.css" /> -->
+        <style>
+            .ui-content {
+                padding: 0 !important;
+            }
+              
+            .ui-listview {
+                margin: 0 !important;
+            }
+              
+            .example-wrapper, .example-wrapper div.iscroll-scroller {
+                width: 100% !important;
+            }
+        </style>
+        <script src='http://code.jquery.com/jquery-1.10.1.min.js'></script>
+        <script src='http://code.jquery.com/mobile/1.4.0-beta.1/jquery.mobile-1.4.0-beta.1.min.js'></script>
+        <script src='http://example.gajotres.net/iscrollview/iscroll.js'></script>
+        <script src='http://example.gajotres.net/iscrollview/jquery.mobile.iscrollview.js'></script>
+        <link rel="stylesheet" href="css/jquery.mobile.datepicker.css" />
+	<link rel="stylesheet" href="css/jquery.mobile.datepicker.theme.css" />
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/mustache.min.js"></script>
+        <script src="js/jquery.mobile.datepicker.js"></script>
+        <script src="js/datepicker.js"></script>
+        <script src="js/jtsage-datebox.min.js"></script>
+        <!-- <script src="//cdn.jsdelivr.net/pouchdb/5.4.5/pouchdb.min.js"></script> -->
+    </head>
+    <body>     
+        <div data-role='page' id='home'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">QR Payments</h1></div>
+            <div role="main" class="ui-content">
+            			<a href='#addclient' data-transition='fade' class='ui-btn ui-corner-all ui-icon-user ui-btn-icon-top' style="Height:70px">
+            					<p align="center" style="font-size:20pt">Add Client</p>
+            			</a>
+            			<a href='#listclients' data-transition='fade' class='ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-top' style="Height:70px">
+            					<p align="center" style="font-size:20pt">Client List</p>
+            			</a>
+            			<a href='#searchclients' id="BtnNewPayment" data-transition='fade' class='ui-btn ui-corner-all ui-icon-plus ui-btn-icon-top' style="Height:70px">
+            					<p align="center" style="font-size:20pt">New Payment</p>
+            			</a>
+            			<a href='#moreoptions' data-transition='fade' class='ui-btn ui-corner-all ui-icon-grid ui-btn-icon-top' style="Height:70px">
+            					<p align="center" style="font-size:20pt">More</p>
+            			</a>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>      
+        </div>
+        `
+        
+        <div data-role='page' id='moreoptions'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">More Options</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div role="main" class="ui-content">
+            			<a href='#' id="BtnViewPayments" data-transition='fade' class='ui-btn ui-corner-all ui-icon-user ui-btn-icon-top' style="Height:70px">
+            					<p align="center" style="font-size:20pt">View Payments</p>
+            			</a>
+            			<a href='#searchclientlist' id="BtnSearchClients" data-transition='fade' class='ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-top' style="Height:70px">
+            					<p align="center" style="font-size:20pt">Search Clients</p>
+            			</a>
+            			<a href='#feetypes' id="BtnFeeTypes" data-transition='fade' class='ui-btn ui-corner-all ui-icon-plus ui-btn-icon-top' style="Height:70px">
+            					<p align="center" style="font-size:20pt">Fee Types</p>
+            			</a>
+            			<a href='#searchclients' id="BtnNewFee" data-transition='fade' class='ui-btn ui-corner-all ui-icon-grid ui-btn-icon-top' style="Height:70px">
+            					<p align="center" style="font-size:20pt">New Fee</p>
+            			</a>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>      
+        </div>
+        
+        <div data-role='page' id='feetypes'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Fee Types</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>  
+            <div data-role='content'>
+              <a id="BtnNewFeetype" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-tag ui-btn-icon-left">New Fee Type</a>
+              <div id="feetypecontainer">
+            
+                <ul data-role='listview' id='feetypelist' data-filter='true'>
+                    <li></li>
+                </ul>
+              </div>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div> 
+        
+        <div data-role='page' id='viewpayments'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Payment List</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>  
+            <div data-role='content'>
+              <div id="paymentcontainer">
+                    <div data-role="collapsible-set" data-content-theme="d" id="paymentListContent"></div>
+              </div>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div> 
+        <div data-role='page' id='smssuccess'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Sms Success</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>  
+            <div data-role='content'>
+              <div id="paymentcontainer">
+                    <label >SMS Sent Successfully</label>
+              </div>
+                <table width="100%">
+                    <tr>
+                        <td><a id="BtnGoHome" style="margin:10pt" class="ui-btn ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Go Home</a></td>
+                        <td><a  href='#searchclients' id="BtnAnotherPayment" style="margin:10pt" class="ui-btn ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">More Payments</a></td>
+                    </tr>
+                </table>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div> 
+        <div data-role='page' id='searchclients' >
+            <div data-role='header' data-theme='a'><br><h1 id="NewPaymentHeader" style="font-size:16px">New Payment</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div data-role='content'>
+                <a id="BtnSearchClientQr" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-tag ui-btn-icon-left">Search with QR</a>
+                <form class='ui-filterable'><input id='filterBasic-input' data-type='search'></form>
+                <br>
+                <ul data-role='listview' id='clientlistfilterable' data-filter='true' data-input='#filterBasic-input'>
+                    <li></li>
+                </ul>
+<!--                <script id="template" type="text/template">
+                    {{#.}}
+                    <li>{{name}} {{surname}}</li>
+                    {{/.}}
+                </script>-->
+                
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div>
+        <div data-role='page' id='searchclientlist' >
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Search Clients</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div data-role='content'>
+                <a id="BtnSearchClientListQr" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-tag ui-btn-icon-left">Search with QR</a>
+                <form class='ui-filterable'><input id='filterBasic-input-1' data-type='search'></form>
+                <br>
+                <ul data-role='listview' id='clientlistfilterable1' data-filter='true' data-input='#filterBasic-input-1'>
+                    <li>first</li>
+                </ul>
+<!--                <script id="template" type="text/template">
+                    {{#.}}
+                    <li>{{name}} {{surname}}</li>
+                    {{/.}}
+                </script>-->
+                
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div>
+        <div data-role='page' id='newpayment' >
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">New Payment</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div data-role='content'>
+
+                </br>
+                <p id="newpaymentClientId" style="display: none"></p>
+                <p id="newpaymentQrId" style="display: none"></p>
+                <p id="newpaymentClientMobile" style="display: none"></p>
+                <p id="newpaymentClientName" style="display: none"></p>
+                <h2 id="newpaymentName"></h2><br>
+                <table width="100%">
+                    <tr>
+                        <td>Payment Amount:</td>
+                        <td>Payment Date:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="mobile" id="newpaymentAmount"></td>
+                        <td><input type="text" data-role="datebox" id="newpaymentDate" data-options='{"mode":"calbox"}'></td>
+                    </tr>
+                </table>
+                Note: <input type="text" id="newpaymentNote"><br>
+                <a id="BtnSaveNewPayment" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Save</a>
+                <a id="BtnSaveNewPaymentAndSMS" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Save and SMS</a><br>
+                Feedback: <p id="newpaymentError" ><br>
+                </br>
+                <!-- <a href='#home' class='ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-left' data-transition='fade' >Back</a>       -->
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div>  
+        <div data-role='page' id='newfee' >
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">New Fee</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div data-role='content'>
+
+                </br>
+                <p id="newfeeClientId" style="display: none"></p>
+                <p id="newfeeId" style="display: none"></p>
+                <h3 id="newfeeClientName" ></h3>
+                
+                <a id="BtnSelectFee" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-bullets ui-btn-icon-left">Select fee</a>
+                <p id="newfeeName"></p><br>
+                Fee date: <input type="text" data-role="datebox" id="newfeeDate" data-options='{"mode":"calbox"}'>
+                Note: <input type="text" id="newfeeNote"><br>
+                <a id="BtnSaveNewFee" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Save</a>
+                
+                </br>
+                <!-- <a href='#home' class='ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-left' data-transition='fade' >Back</a>       -->
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div>  
+        <div data-role='page' id='addclient' >
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Add Client</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div data-role='content'>
+            	</br>
+                <table width="100%">
+                    <tr>
+                        <td>First Name:</td>
+                        <td>Last Name:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="fname" id="newClientName"></td>
+                        <td><input type="text" name="lname" id="newClientSurname"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>Mobile:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="email" id="newClientEmail"></td>
+                        <td><input type="text" name="mobile" id="newClientMobile"></td>
+                    </tr>
+                    <tr>
+                        <td>Category:</td>
+                        <td>QR Id:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="division" id="newClientDivision"></td>
+                        <td><input type="text" name="division" id="newClientQrId"></td>
+                    </tr>
+                </table>
+                
+                <a id="BtnCaptureNewClientQr" style="margin:10pt" class="ui-btn ui-btn-inline ui-icon-tag ui-btn-icon-left">QR</a>
+                <a id="BtnSaveNewClient" style="margin:10pt" class="ui-btn ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Save</a>
+<!--                <fieldset data-theme="a" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal" data-type="horizontal" data-mini="false" style="align-content: center;align-items: center">     
+                    <button id="BtnCaptureNewClientQr" data-icon="tag">QR&nbsp;&nbsp;</button>
+                    <button id="BtnSaveNewClient" data-icon="arrow-d" >Save</button>
+                </fieldset>-->
+                </br>
+                <!-- <a href='#home' class='ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-left' data-transition='fade' >Back</a>       -->
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div>    
+        
+        <div data-role='page' id='addfeetype' >
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Add Fee Type</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div data-role='content'>
+            	</br>
+                <table width="100%">
+                    <tr>
+                        <td>Name:</td>
+                        <td>Price (R):</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="division" id="newFeetypeName"></td>
+                        <td><input type="text" name="fname" id="newFeetypePrice"></td>
+                    </tr>
+                </table>
+                Description:<input type="text" name="division" id="newFeetypeDescr"><br>
+                <a id="BtnSaveNewFeetype" style="margin:10pt" class="ui-btn ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Save</a>
+                </br>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div> 
+
+        <div data-role='page' id='listclients'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Client List</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>  
+            <div data-role='content'>
+              <div id="clientcontainer">
+                    <div data-role="collapsible-set" data-content-theme="d" id="clientListContent"></div>
+              </div>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div>   
+        <div data-role='page' id='paymentsforclient'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Payments for client</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>  
+            <div data-role='content'>
+              <div id="containerpaymentsforclient">
+                <ul id="paymentListPerClient"></ul>
+              </div>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div> 
+        <div data-role='page' id='feesforclient'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">fees for client</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>  
+            <div data-role='content'>
+              <div id="containerfeesforclient">
+                <ul id="feeListPerClient"></ul>
+              </div>
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div> 
+        
+        <div data-role='page' id='statementforclient'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Statement for client</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>  
+            <div data-role='content'>
+                <h2 id="statementclientname"></h2>
+                <table width="100%">
+                    <tr>
+                        <td>Current Balance: <p style="font-weight:bold" id="statementCurrentBalance"></p><br></td>
+                        <td>Previous Balance: <p style="font-weight:bold" id="statementPreviousBalance"></p><br></td>
+                    </tr>
+                </table>
+                <a id="BtnSmsStatement" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-phone ui-btn-icon-left">SMS Statement</a><p id="statementSmsError" ><br>
+                Current Month:
+                <table width="100%">
+                    <tr>
+                        <td width="50%">Total fees: <p id="curstatementtotalfees" style="font-weight:bold"></p></td>
+                        <td width="50%">Total payments: <p id="curstatementtotalpayments" style="font-weight:bold"></p></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="curcontainerstatementfeesforclient">
+                                <p id="curstatementfeeListPerClient"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="curcontainerstatementpaymentsforclient">
+                                <ul id="curstatementpaymentListPerClient"></ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                Full History
+                <table width="100%">
+                    <tr>
+                        <td width="50%">Total fees: <p id="statementtotalfees" style="font-weight:bold"></p></td>
+                        <td width="50%">Total payments: <p id="statementtotalpayments" style="font-weight:bold"></p></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="containerstatementfeesforclient">
+                                <p id="statementfeeListPerClient"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="containerstatementpaymentsforclient">
+                                <ul id="statementpaymentListPerClient"></ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>        
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div> 
+        
+        <div data-role='page' id='feetypedetail'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Update Fee Type</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div data-role='content'>
+                </br>
+                Fee type:<input type="text" name="division" id="updateFeetypeName"><br>
+                Description: <input type="text" name="fname" id="updateFeetypeDescription"><br>
+                Price (R): <input type="text" name="lname" id="updateFeetypePrice"><br>
+                <br>
+                <a id="BtnDeleteFeetype" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left">Delete</a>
+                <a id="BtnUpdateFeetype" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Save</a>
+                </br>
+            </div>
+        </div>
+
+
+        
+        <div data-role='page' id='updateclient'>
+            <div data-role='header' data-theme='a'><br><h1 style="font-size:16px">Update Client</h1><a style="height:25pt;width:25pt;margin-top:10pt" class="back-btn ui-icon-arrow-l ui-btn ui-shadow ui-corner-all ui-btn-icon-notext ui-btn-inline"></a><a style="height:25pt;width:25pt;margin-top:10pt" class="home-btn ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext ui-btn-inline"></a></div>
+            <div data-role="popup" id="popupBasic">
+                <p>Done.<p>
+            </div>
+            <div data-role='content'>
+                </br>
+                <!--<a href="#" class="ui-btn ui-btn-inline"  style="Width:80pt" id="BtnCaptureUpdateClientQr">QR</a>-->
+
+                
+                
+                <table width="100%">
+                    <tr>
+                        <td>First name:</td>
+                         <td>Last name:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="fname" id="updateClientName"></td>
+                         <td><input type="text" name="lname" id="updateClientSurname"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                         <td>Mobile:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="email" id="updateClientEmail"></td>
+                         <td><input type="text" name="mobile" id="updateClientMobile"></td>
+                    </tr>
+                    <tr>
+                        <td>Category:</td>
+                         <td>QR Id:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="division" id="updateClientDivision"></td>
+                         <td><input type="text" name="division" id="updateClientQrId"></td>
+                    </tr>
+                </table>
+                <br>
+                <input type="checkbox" name="clientdisabled" id="updateClientDisabled" >
+                <label for="updateClientDisabled">Not Active</label>
+                <a id="BtnDeleteClient" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left">Delete</a>
+                <a id="BtnDeleteHistory" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Delete History</a>
+                <a id="BtnCaptureUpdateClientQr" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-tag ui-btn-icon-left">QR</a>
+                <a id="BtnViewClientPayments" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-bullets ui-btn-icon-left">Payments</a>
+                <a id="BtnViewClientFees" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-bars ui-btn-icon-left">Fees</a>
+                <a id="BtnViewClientStatement" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-grid ui-btn-icon-left">Statement</a>
+                <a id="BtnUpdateClient" style="margin:10pt" class="ui-btn ui-mini ui-btn-inline ui-icon-arrow-d ui-btn-icon-left">Save</a>
+<!--                <fieldset data-theme="a" data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal" data-type="horizontal" data-mini="false" style="align-content: center;align-items: center">
+                    <button id="BtnDeleteClient" data-icon="delete">Delete</button>        
+                    <button id="BtnCaptureUpdateClientQr" data-icon="tag">QR&nbsp;&nbsp;</button>
+                    <button id="BtnViewClientPayments" data-icon="bullets">Payments</button>
+                    <button id="BtnUpdateClient" data-icon="arrow-d">Save</button>
+                </fieldset>
+                </div>-->
+
+<!--                <input type="submit" data-theme="b" id="BtnViewClientPayments" class="ui-mini ui-btn" value="View Payments">
+                <input type="submit" data-theme="b" id="BtnUpdateClient" value="Update Client">-->
+                </br>
+                <!-- <a href='#listclients' class='ui-btn ui-corner-all ui-icon-arrow-l ui-btn-icon-left' data-transition='fade' >Back</a>       -->
+            </div>
+            <div data-theme='b' data-role='footer'><h1>QR Payments - Copyright 2016</h1></div>
+        </div> 
+        <script type="text/javascript">
+            app.initialize();
+            //document.addEventListener('deviceready', this.onDeviceReady, false);
+
+        </script>
+    </body>
+</html>   
